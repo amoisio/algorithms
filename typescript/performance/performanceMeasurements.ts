@@ -60,7 +60,7 @@ export default class PerformanceMeasurements {
     get median(): number {
         let sorted = this.statData.sort((a, b) => a - b);
         let len = sorted.length;
-        return sorted[len / 2];
+        return sorted[Math.floor(len / 2)];
     }
 
     public add(measurement: number) {

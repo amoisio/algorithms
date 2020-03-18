@@ -5,6 +5,7 @@ import WeightedQuickUnion from './weightedQuickUnion';
 import iUnionFind from './iUnionFind';
 import PerformanceWrapper from './performanceWrapper';
 import PerformanceStatistics from '../performance/performanceStatistics';
+import WQUPC from './wqupc';
 
 // Counts of items and operations
 const counts: number[] = [10, 
@@ -14,13 +15,15 @@ const counts: number[] = [10,
     50000,
     100000, 
     150000,
-    200000];
+    200000,
+    1000000];
 
 const createUnionFindCases: (initialSize: number) => { name: string, algorithm: iUnionFind }[]
     = (initialSize: number) => [
-        { name: "quickFind", algorithm: new QuickFind(initialSize) },
-        { name: "quickUnion", algorithm: new QuickUnion(initialSize) },
-        { name: "wqu", algorithm: new WeightedQuickUnion(initialSize) }
+        // { name: "quickFind", algorithm: new QuickFind(initialSize) },
+        // { name: "quickUnion", algorithm: new QuickUnion(initialSize) },
+        { name: "wqu", algorithm: new WeightedQuickUnion(initialSize) },
+        { name: "wqupc", algorithm: new WQUPC(initialSize) }
     ];
 
 const createPerformanceWrapper: (name: string, unionFind: iUnionFind, capacity: number) => PerformanceWrapper = 
