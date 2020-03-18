@@ -1,4 +1,4 @@
-import QuickUnion from '../algorithms/quickUnion';
+import QuickUnion from '../quickUnion';
 
 test('quickUnion initializes propertly', () => {
     let qf = new QuickUnion(10);

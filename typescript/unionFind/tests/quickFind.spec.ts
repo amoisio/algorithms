@@ -1,4 +1,4 @@
-import QuickFind from '../algorithms/quickFind';
+import QuickFind from '../quickFind';
 
 test('quickFind initializes propertly', () => {
     let qf = new QuickFind(10);

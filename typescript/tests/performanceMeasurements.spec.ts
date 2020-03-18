@@ -1,4 +1,4 @@
-import PerformanceMeasurements from "../utilities/performanceMeasurements";
+import PerformanceMeasurements from "../performance/performanceMeasurements";
 
 describe('Performance measurements', () => {
 
@@ -29,9 +29,4 @@ describe('Performance measurements', () => {
     test('.avg gets the average of all measurements', () => {
         expect(performanceMeasurements.average).toBe(6.5);
     });
-
-    test('Attempting to add new measurements gives an error', () => {
-        expect(() => performanceMeasurements.add(1)).toThrow();
-    });
-    
 });

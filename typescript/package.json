@@ -2,10 +2,11 @@
   "name": "typescript",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "directories": {
     "example": "examples",
-    "test": "tests"
+    "test": "tests",
+    "utilities": "utilities",
+    "performance": "performance"
   },
   "scripts": {
     "test:unit": "jest"
@@ -20,6 +21,7 @@
     "jest": "^25.1.0"
   },
   "dependencies": {
-    "@types/jest": "^25.1.4"
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.1"
   }
 }
