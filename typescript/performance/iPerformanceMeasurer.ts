@@ -1,7 +1,5 @@
-import PerformanceMeasurements from "./performanceMeasurements";
-import PerformanceStatistics from "./performanceStatistics";
+import { PerformanceStatistics }  from "./performanceMeasurements";
 
 export default interface iPerformanceMeasurer {
-    getMeasurements(): PerformanceMeasurements;
     getStatistics(): PerformanceStatistics;
 }

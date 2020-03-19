@@ -67,7 +67,25 @@ export default class PerformanceMeasurements {
         this._data[this._index++] = measurement;
     }
 
-    private get sum(): number {
-        return this.data.reduce((previous, current) => previous + current);
+    public getStatistics(title: string): PerformanceStatistics {
+        return new PerformanceStatistics(title, this);
     }
+}
+
+export class PerformanceStatistics {
+    constructor(algorithm: string, measurements: PerformanceMeasurements) {
+        this.algorithm = algorithm;
+        this.n = measurements.count;
+        this.min = measurements.min;
+        this.max = measurements.max;
+        this.avg = measurements.average;
+        this.med = measurements.median;
+    }
+
+    public readonly algorithm: string;
+    public readonly n: number;
+    public readonly min: number;
+    public readonly max: number;
+    public readonly avg: number;
+    public readonly med: number;
 }

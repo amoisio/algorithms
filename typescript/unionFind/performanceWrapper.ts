@@ -1,8 +1,7 @@
 import iPerformanceMeasurer from "../performance/iPerformanceMeasurer";
-import PerformanceMeasurements from "../performance/performanceMeasurements";
+import PerformanceMeasurements, { PerformanceStatistics } from "../performance/performanceMeasurements";
 import iUnionFind from "./iUnionFind";
 import { performance } from 'perf_hooks';
-import PerformanceStatistics from "../performance/performanceStatistics";
 
 export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasurer {
     
@@ -25,6 +24,7 @@ export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasu
         let duration = Math.round((t1 - t0)*1000); // us
         this._measurements.add(duration);
     }
+
     connected(p: number, q: number): boolean {
         let t0 = performance.now();
 
@@ -36,13 +36,8 @@ export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasu
 
         return result;
     }
-    getMeasurements(): PerformanceMeasurements {
-        return this._measurements;
-    }
-    getStatistics(): PerformanceStatistics {
-        let name = this._name;
-        let measurements = this.getMeasurements();
-        return new PerformanceStatistics(name, measurements);
-    }
 
+    getStatistics(): PerformanceStatistics {
+        return this._measurements.getStatistics(this._name);
+    }
 }
