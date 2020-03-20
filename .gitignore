@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-percolation
 **/dist
 
 # local env files
