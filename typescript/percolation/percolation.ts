@@ -30,74 +30,115 @@ export default class Percolation {
 
         this._n = n;
 
-        this._unionFind = new unionFind(n * n + 2);
-        this._top = n * n + 1;
-        this._bottom = n * n + 2;
-        this._sites = new Array<boolean>(n * n);
+        let count = n * n + 2;
+        this._unionFind = new unionFind(count);
+        this._sites = new Array<boolean>(count);
+        
+        // Open virtual nodes
+        this._top = count - 2;
+        this._bottom = count - 1;
+        this._sites[this._top] = true;
+        this._sites[this._bottom] = true;
     }
-
-    /**
-     * We model a percolation system using an n-by-n grid 
-     * of sites. Each site is either open or blocked. 
-     * A full site is an open site that can be connected 
-     * to an open site in the top row via a chain of 
-     * neighboring (left, right, up, down) open sites. 
-     * We say the system percolates if there is a full 
-     * site in the bottom row. In other words, a system 
-     * percolates if we fill all open sites connected to 
-     * the top row and that process fills some open site 
-     * on the bottom row. (For the insulating/metallic 
-     * materials example, the open sites correspond to 
-     * metallic materials, so that a system that 
-     * percolates has a metallic path from top to bottom, 
-     * with full sites conducting. For the porous substance 
-     * example, the open sites correspond to empty space 
-     * through which water might flow, so that a system 
-     * that percolates lets water fill open sites, flowing 
-     * from top to bottom.)
-     * 
-     */
-    
-
 
     /**
      * Translate row, column index pair to a data array index
      * @param row row index
      * @param col column index
      */
-    private toDataIndex(row: number, col: number) : number {
+    private toItemIndex(row: number, col: number) : number {
+        if (row < 0) {
+            // Return the top virtual node index
+            return this._top;
+        } 
+
+        if (row > this._n) {
+            // Return the bottom virtual node index
+            return this._bottom;
+        }
+
         return row * this._n + col;
     }
 
-    // opens the site (row, col) if it is not open already
+    /**
+     * Opens the site if it is not open already
+     * @param row grid row index
+     * @param col grid column index
+     */
     public open(row: number, col: number) {
-        if (row < 0 || col < 0 || row > this._n || col > this._n)
+        if (row < 0 || col < 0 || row > this._n || col > this._n) {
             throw new Error("Invalid argument");
+        }
+
+        let index = this.toItemIndex(row, col);
+        this.   _sites[index] = true;
+
+        // Connect neighbouring sites (if they are open)
+        this.connectNeighbour(index, row - 1, col); // top
+        this.connectNeighbour(index, row + 1, col); // bottom
+        this.connectNeighbour(index, row, col - 1); // left
+        this.connectNeighbour(index, row, col + 1); // right
     }
 
-    // is the site (row, col) open?
+    /**
+     * Connects to neighbouring site if it is open
+     * @param index item index of the current site
+     * @param row grid row index of the neighbouring site
+     * @param col grid column index of the neighbouring site
+     */
+    private connectNeighbour(index: number, row: number, col: number) {
+        let neighbourIndex = this.toItemIndex(row, col);
+        if (this._sites[neighbourIndex])
+            this._unionFind.union(index, neighbourIndex);
+    }
+
+    /**
+     * Is the site open (or blocked)
+     * @param row grid row index
+     * @param col grid column index
+     */
     public isOpen(row: number, col: number) : boolean {
-        if (row < 0 || col < 0 || row > this._n || col > this._n)
+        if (row < 0 || col < 0 || row > this._n || col > this._n) {
             throw new Error("Invalid argument");
+        }
 
-        return false;
+        let index = this.toItemIndex(row, col);
+        return this._sites[index];
     }
 
-    // is the site (row, col) full?
+    /**
+     * Is the site full - a full site is an open site 
+     * that can be connected to an open site in the top 
+     * row via a chain of  neighboring (left, right, 
+     * up, down) open sites. 
+     * @param row grid row index
+     * @param col grid column index
+     */
     public isFull(row: number, col: number): boolean {
-        if (row < 0 || col < 0 || row > this._n || col > this._n)
+        if (row < 0 || col < 0 || row > this._n || col > this._n) {
             throw new Error("Invalid argument");
+        }
+        
+        let index = this.toItemIndex(row, col);
+        let isOpen = this._sites[index];
 
-        return false;
+        return isOpen
+            ? this._unionFind.connected(this._top, index)
+            : false;
     }
 
-    // returns the number of open sites
+    /**
+     * Gets the number of open sites in the system
+     */
     public numberOfOpenSites(): number {
-        return 0;
+        // We offset by -2 due to the top and bottom virtual nodes
+        return this._sites.filter(site => site).length - 2;
     }
 
-    // does the system percolate?
+    /**
+     * Determines if the system percolates.
+     */
     public percolates() : boolean {
-        return false;
+        return this._unionFind.connected(this._top, this._bottom);
     }
 }
