@@ -1,6 +1,6 @@
-import iPerformanceMeasurer from "../performance/iPerformanceMeasurer";
-import PerformanceMeasurements, { PerformanceStatistics } from "../performance/performanceMeasurements";
-import iUnionFind from "./iUnionFind";
+import iPerformanceMeasurer from "../../performance/iPerformanceMeasurer";
+import PerformanceMeasurements, { PerformanceStatistics } from "../../performance/performanceMeasurements";
+import iUnionFind from "../iUnionFind";
 import { performance } from 'perf_hooks';
 
 export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasurer {

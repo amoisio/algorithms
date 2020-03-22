@@ -13,7 +13,7 @@ export default class QuickUnion {
     public union(p: number, q: number) {
         let pRoot = this.findRoot(p);
         let qRoot = this.findRoot(q);
-        this.data[qRoot] = pRoot;
+        this.data[pRoot] = qRoot;
     }
 
     public connected(p: number, q: number): boolean {

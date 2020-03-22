@@ -26,6 +26,7 @@
   "exclude": [
     "node_modules",
     "**/tests",
+    "**/*.spec.ts"
 
   ]
   // "lib": [],                             /* Specify library files to be included in the compilation. */

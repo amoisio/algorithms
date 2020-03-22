@@ -1,43 +1,34 @@
 import Percolation from './percolation';
-import WQUPC from '../unionFind/wqupc';
+import Statistics from '../utilities/statistics';
+import { UnionFindConstructor } from '../unionFind/iUnionFind';
 
 export default class PercolationStats {
 
     private data: Array<number>;
-    constructor(private n: number, private trials: number) {
+    private statistics: Statistics;
+    constructor(private n: number, private trials: number, private unionFind: UnionFindConstructor) {
         this.data = new Array<number>(trials);
+        this.statistics = new Statistics();
     }
 
     // sample mean of percolation threshold
     public mean(): number {
-        let sum = this.data
-            .reduce((prev, next) => prev + next);
-        return sum / this.trials;
+        return this.statistics.mean;
     }
 
     // sample standard deviation of percolation threshold
     public stddev(): number {
-        let mean = this.mean();
-        let sum = this.data
-            .map(d => Math.pow(d - mean, 2))
-            .reduce((prev, next) => prev + next);
-        let variance = sum / (this.trials - 1);
-
-        return Math.sqrt(variance);
+        return this.statistics.stddev;
     }
 
     // low endpoint of 95% confidence interval
     public confidenceLo(): number {
-        let mean = this.mean();
-        let stddev = this.stddev();
-        return mean - 1.96*stddev/Math.sqrt(this.trials);
+        return this.statistics.confidenceLo;
     }
 
     // high endpoint of 95% confidence interval
     public confidenceHi(): number {
-        let mean = this.mean();
-        let stddev = this.stddev();
-        return mean + 1.96*stddev/Math.sqrt(this.trials);
+        return this.statistics.confidenceHi;
     }
 
     // test client (see below)
@@ -45,21 +36,19 @@ export default class PercolationStats {
 
         for (let i = 0; i < this.trials; i++) {
 
-            let system = new Percolation(this.n, WQUPC);
+            let system = new Percolation(this.n, this.unionFind);
 
             while(!system.percolates()) {
                 let row = Math.floor(Math.random() * this.n);
-                if (row == this.n)
-                    row = this.n - 1;
-
                 let col = Math.floor(Math.random() * this.n);
-                if (col == this.n)
-                    col = this.n - 1;
-
                 system.open(row, col);
             } 
 
-            this.data.push(system.numberOfOpenSites());
+            let openSites = system.numberOfOpenSites(); 
+            let totalSites = this.n * this.n;
+            this.data.push(openSites / totalSites);
         }
+
+        this.statistics.compute(this.data);
     }
 }

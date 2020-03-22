@@ -1,11 +1,11 @@
-import IUnionFind from './iUnionFind';
-import QuickFind from './quickFind';
-import QuickUnion from './quickUnion';
-import WeightedQuickUnion from './weightedQuickUnion';
-import iUnionFind from './iUnionFind';
+import IUnionFind from '../iUnionFind';
+import QuickFind from '../quickFind';
+import QuickUnion from '../quickUnion';
+import WeightedQuickUnion from '../weightedQuickUnion';
+import iUnionFind from '../iUnionFind';
 import PerformanceWrapper from './performanceWrapper';
-import { PerformanceStatistics } from '../performance/performanceMeasurements';
-import WQUPC from './wqupc';
+import { PerformanceStatistics } from '../../performance/performanceMeasurements';
+import WQUPC from '../wqupc';
 
 // Counts of items and operations
 const counts: number[] = [10, 

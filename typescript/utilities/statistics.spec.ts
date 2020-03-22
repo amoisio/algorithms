@@ -1,4 +1,4 @@
-import Statistics from '../utilities/statistics';
+import Statistics from './statistics';
 
 const data = [
     43, 44, 45, 46, 47, 48, 49,
@@ -9,7 +9,7 @@ const data = [
     38,	17,	16,	15,	14,	13,	30,
     37,	36,	35,	34,	33,	32,	31];
 
-describe("Statistics computation", () => {
+describe("Statistics computations", () => {
 
     let stats: Statistics;
 
