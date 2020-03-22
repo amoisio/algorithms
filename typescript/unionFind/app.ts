@@ -59,7 +59,7 @@ for (let itemCount of counts) {
 
 let sorted = stats.sort((a, b) => {
     if (a.algorithm == b.algorithm)
-        return a.n - b.n;
+        return a.statistics.count - b.statistics.count;
     else if (a.algorithm < b.algorithm)
         return -1;
     else 
@@ -67,7 +67,7 @@ let sorted = stats.sort((a, b) => {
 });
 
 for (let s of sorted) {
-    console.log(`${s.algorithm} (${s.n}) - avg: ${s.avg}, median: ${s.med}`);
+    console.log(`${s.algorithm} (${s.statistics.count}) - avg: ${s.statistics.mean}, median: ${s.statistics.median}`);
 }
  
 

@@ -38,6 +38,7 @@ export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasu
     }
 
     getStatistics(): PerformanceStatistics {
-        return this._measurements.getStatistics(this._name);
+        // Get statistics and drop measurements that are equal to 0 (These are redundant operations)
+        return this._measurements.getStatistics(this._name, d => d != 0);
     }
 }

@@ -1,8 +1,10 @@
 import PerformanceMeasurements from "../performance/performanceMeasurements";
+import Statistics from "../utilities/statistics";
 
 describe('Performance measurements', () => {
 
     const performanceMeasurements = new PerformanceMeasurements(10);
+    let stats: Statistics;
     beforeAll(() => {
         performanceMeasurements.add(3);
         performanceMeasurements.add(5);
@@ -15,18 +17,20 @@ describe('Performance measurements', () => {
         performanceMeasurements.add(3);
         performanceMeasurements.add(6);
 
+        stats = performanceMeasurements.getStatistics("test", undefined).statistics;
+
         // total 65
     });
 
     test('.min gets the minimum measurement', () => {
-        expect(performanceMeasurements.min).toBe(3);
+        expect(stats.min).toBe(3);
     });
 
     test('.max gets the maximum measurement', () => {
-        expect(performanceMeasurements.max).toBe(11);
+        expect(stats.max).toBe(11);
     });
 
     test('.avg gets the average of all measurements', () => {
-        expect(performanceMeasurements.average).toBe(6.5);
+        expect(stats.mean).toBe(6.5);
     });
 });
