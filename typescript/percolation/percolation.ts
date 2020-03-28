@@ -25,7 +25,7 @@ export default class Percolation {
 
     // creates n-by-n grid, with all sites initially blocked
     constructor(n: number, unionFind: UnionFindConstructor) {
-        if (n < 0) 
+        if (n < 0)
             throw new Error("Invalid argument");
 
         this._n = n;
@@ -33,12 +33,18 @@ export default class Percolation {
         let count = n * n + 2;
         this._unionFind = new unionFind(count);
         this._sites = new Array<boolean>(count);
-        
+
         // Open virtual nodes
         this._top = count - 2;
         this._bottom = count - 1;
         this._sites[this._top] = true;
         this._sites[this._bottom] = true;
+
+        // Initialize the remaining nodes as closed
+        for (let i = 0; i < count - 2; i++) {
+            this._sites[i] = false;
+        }
+        
     }
 
     /**
@@ -46,15 +52,23 @@ export default class Percolation {
      * @param row row index
      * @param col column index
      */
-    private toItemIndex(row: number, col: number) : number {
+    private toItemIndex(row: number, col: number): number {
         if (row < 0) {
             // Return the top virtual node index
             return this._top;
-        } 
+        }
 
-        if (row > this._n) {
+        if (row >= this._n) {
             // Return the bottom virtual node index
             return this._bottom;
+        }
+
+        if (col < 0) {
+            return row * this._n;
+        }
+
+        if (col >= this._n) {
+            return row * this._n + (this._n - 1);
         }
 
         return row * this._n + col;
@@ -66,18 +80,21 @@ export default class Percolation {
      * @param col grid column index
      */
     public open(row: number, col: number) {
-        if (row < 0 || col < 0 || row > this._n || col > this._n) {
+        if (row < 0 || col < 0 || row >= this._n || col >= this._n) {
             throw new Error("Invalid argument");
         }
 
         let index = this.toItemIndex(row, col);
-        this.   _sites[index] = true;
 
-        // Connect neighbouring sites (if they are open)
-        this.connectNeighbour(index, row - 1, col); // top
-        this.connectNeighbour(index, row + 1, col); // bottom
-        this.connectNeighbour(index, row, col - 1); // left
-        this.connectNeighbour(index, row, col + 1); // right
+        if (!this._sites[index]) {
+            this._sites[index] = true;
+
+            // Connect neighbouring sites (if they are open)
+            this.connectNeighbourIfOpen(index, row - 1, col); // top
+            this.connectNeighbourIfOpen(index, row + 1, col); // bottom
+            this.connectNeighbourIfOpen(index, row, col - 1); // left
+            this.connectNeighbourIfOpen(index, row, col + 1); // right
+        }
     }
 
     /**
@@ -86,7 +103,7 @@ export default class Percolation {
      * @param row grid row index of the neighbouring site
      * @param col grid column index of the neighbouring site
      */
-    private connectNeighbour(index: number, row: number, col: number) {
+    private connectNeighbourIfOpen(index: number, row: number, col: number) {
         let neighbourIndex = this.toItemIndex(row, col);
         if (this._sites[neighbourIndex])
             this._unionFind.union(index, neighbourIndex);
@@ -97,7 +114,7 @@ export default class Percolation {
      * @param row grid row index
      * @param col grid column index
      */
-    public isOpen(row: number, col: number) : boolean {
+    public isOpen(row: number, col: number): boolean {
         if (row < 0 || col < 0 || row > this._n || col > this._n) {
             throw new Error("Invalid argument");
         }
@@ -118,7 +135,7 @@ export default class Percolation {
         if (row < 0 || col < 0 || row > this._n || col > this._n) {
             throw new Error("Invalid argument");
         }
-        
+
         let index = this.toItemIndex(row, col);
         let isOpen = this._sites[index];
 
@@ -138,7 +155,7 @@ export default class Percolation {
     /**
      * Determines if the system percolates.
      */
-    public percolates() : boolean {
+    public percolates(): boolean {
         return this._unionFind.connected(this._top, this._bottom);
     }
 }

@@ -46,7 +46,7 @@ export default class PercolationStats {
 
             let openSites = system.numberOfOpenSites(); 
             let totalSites = this.n * this.n;
-            this.data.push(openSites / totalSites);
+            this.data[i] = openSites / totalSites;
         }
 
         this.statistics.compute(this.data);

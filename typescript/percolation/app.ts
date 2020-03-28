@@ -1,8 +1,8 @@
 import WQUPC from '../unionFind/weightedQuickUnion';
 import PercolationStats from './percolationStats';
 
-const gridSize = 100;
-const trials = 100;
+const gridSize = 200;
+const trials = 1000;
 const algorithm = WQUPC;
 
 let stats = new PercolationStats(gridSize, trials, algorithm);
