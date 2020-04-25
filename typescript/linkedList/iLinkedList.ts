@@ -17,18 +17,19 @@ export default interface ILinkedList<T> {
 
     /**
      * Removes an item from the list.
-     * @param item Item to remove.
+     * @param index Index of the item to remove.
+     * @returns Item that was removed.
      */
-    remove(item: T): void;
+    remove(index: number): T;
 
     /**
      * Access an item from the list with a 0-based index.
      */
-    getItem(index: number): T | undefined;
+    getItem(index: number): T;
 
     /**
      * Writes out the list data as an array
      */
-    toArray(): (T|undefined)[];
+    toArray(): T[];
 }
 

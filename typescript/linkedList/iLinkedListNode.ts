@@ -5,7 +5,7 @@ export default interface ILinkedListNode<T> {
      */
     next ?: ILinkedListNode<T>;
     /**
-     * Gets the value of the current node. Falsy if value has not yet been assigned to the node.
+     * Gets the value of the current node
      */
-    value ?: T;
+    value : T;
 }

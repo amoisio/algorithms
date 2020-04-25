@@ -1,11 +1,11 @@
 import ILinkedListNode from "./iLinkedListNode";
 
 export default class LinkedListNode<T> implements ILinkedListNode<T> {
-    private _value ?: T;
+    private _value : T;
     private _next ?: ILinkedListNode<T>;
 
-    constructor() {
-        this._value = undefined;
+    constructor(value: T) {
+        this._value = value;
         this._next = undefined;
     }
 
@@ -17,11 +17,11 @@ export default class LinkedListNode<T> implements ILinkedListNode<T> {
         this._next = node;
     }
 
-    get value(): T | undefined {
+    get value(): T {
         return this._value;
     }
 
-    set value(modifiedValue: T | undefined) {
+    set value(modifiedValue: T) {
         this._value = modifiedValue;
     }
 }
