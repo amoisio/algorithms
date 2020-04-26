@@ -1,22 +1,23 @@
-import IQueue from "./iQueue";
+import IStack from "./iStack";
 import ICollection from "collection/iCollection";
 
-export default class Queue<T> implements IQueue<T> {
+export default class Stack<T> implements IStack<T> {
     private readonly _data: ICollection<T>;
 
     constructor(data: ICollection<T>) {
         this._data = data;
     }
+
     toArray(): T[] {
         return this._data.toArray();
     }
 
-    queue(item: T): void {
+    push(item: T): void {
         this._data.add(item);
     }
     
-    dequeue(): T {
-        return this._data.remove(0);
+    pop(): T {
+        return this._data.remove(this._data.size - 1);
     }
     
 }

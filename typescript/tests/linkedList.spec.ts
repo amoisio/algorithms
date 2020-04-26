@@ -40,6 +40,44 @@ describe('Linked list item addition', () => {
 
 
 describe('Linked list item removal', () => {
+    test('When the only item is removed, size is 0 and array is empty', () => {
+        let list = new LinkedList<number>();
+        list.add(1);
+
+        var removed = list.remove(0);
+
+        expect(removed).toBe(1);
+        expect(list.size).toBe(0);
+        expect(list.toArray().length).toBe(0);
+    });
+
+    test('The first item can be removed', () => {
+        let list = new LinkedList<number>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        var removed = list.remove(0);
+
+        expect(removed).toBe(1);
+        expect(list.size).toBe(2);
+        expect(list.toArray()).toEqual([2, 3]);
+    });
+
+    test('The last item can be removed', () => {
+        let list = new LinkedList<number>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        var removed = list.remove(2);
+
+        expect(removed).toBe(3);
+        expect(list.size).toBe(2);
+        expect(list.toArray()).toEqual([1, 2]);
+    });
+
+
     test('Items can be removed from the list', () => {
         let list = new LinkedList<number>();
         list.add(1);

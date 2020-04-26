@@ -69,13 +69,21 @@ export default class LinkedList<T> implements ICollection<T> {
             throw new Error("Removed node was undefined. This should not happen.");
         }
 
+        
         if (previousNode === undefined) {
-            this._root = undefined;
-            this._last = undefined;
+            // Removing first item
+            if (this._last === removedNode) {
+                this._last = undefined;
+                this._root = undefined;
+            } else {
+                this._root = removedNode.next;
+            }
         } else if (removedNode.next === undefined) {
+            // Removing last item
             this._last = previousNode;
             previousNode.next = undefined;
         } else {
+            // Other cases
             previousNode.next = removedNode.next;
         }
 
