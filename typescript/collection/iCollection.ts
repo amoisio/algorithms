@@ -1,16 +1,17 @@
 /**
- * Interface for a generic 
+ * Interface for a generic collection
  */
 export default interface ICollection<T> {
-    /**
-     * Get the number of empty slots in the collection.
-     */
-    capacity: number;
 
     /**
      * Get the number of items in the list.
      */
     size: number;
+
+    /**
+     * Determine if the collection is empty.
+     */
+    isEmpty(): boolean;
 
     /**
      * Add an item to the collection.
@@ -19,7 +20,7 @@ export default interface ICollection<T> {
     add(item: T): void;
 
     /**
-     * Remove an item at the specific index.
+     * Remove (and return) the item at the specific index.
      * @param index Item index to remove.
      * @returns Item that was removed.
      */
