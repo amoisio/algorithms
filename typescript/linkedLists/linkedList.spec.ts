@@ -6,6 +6,19 @@ describe('Linked list initialisation', () => {
 
         expect(list.size).toBe(0);
     });
+
+    test('Linked list with no entries is empty', () => {
+        let list = new LinkedList<number>();
+
+        expect(list.isEmpty()).toBeTruthy();
+    });
+
+    test('Linked list with at least one entry is not empty', () => {
+        let list = new LinkedList<number>();
+        list.add(1);
+
+        expect(list.isEmpty()).toBeFalsy();
+    })
 });
 
 describe('Linked list item addition', () => {
