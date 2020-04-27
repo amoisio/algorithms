@@ -1,6 +1,6 @@
-import LinkedList from '../linkedList/linkedList';
+import LinkedList from '../linkedLists/linkedList';
 import ICollection from '../collection/iCollection';
-import Stack from '../stack/stack';
+import Stack from './stack';
 
 describe('Stack operation', () => {
     test('Items can be pushed onto the stack', () => {

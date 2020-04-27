@@ -1,6 +1,6 @@
-import LinkedList from '../linkedList/linkedList';
+import LinkedList from '../linkedLists/linkedList';
 import ICollection from '../collection/iCollection';
-import Queue from '../queue/queue';
+import Queue from './queue';
 
 describe('Queue operation', () => {
     test('Items can be added to the end of the queue', () => {

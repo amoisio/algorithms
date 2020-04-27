@@ -1,11 +1,9 @@
 import ICollection from "../collection/iCollection";
-import LinkedListNode from "./linkedListNode";
-import ILinkedListNode from "./iLinkedListNode";
 
 export default class LinkedList<T> implements ICollection<T> {
     private _size: number;
-    private _root?: ILinkedListNode<T>;
-    private _last?: ILinkedListNode<T>;
+    private _root?: LinkedListNode<T>;
+    private _last?: LinkedListNode<T>;
 
     constructor() {
         this._size = 0;
@@ -14,17 +12,14 @@ export default class LinkedList<T> implements ICollection<T> {
     }
 
     /**
-     * Number of nodes in the list.
-     */
-    public get capacity(): number {
-        return this._size;
-    }
-
-    /**
      * Number of nodes in the list (same as capacity)
      */
     public get size(): number {
         return this._size;
+    }
+
+    public isEmpty(): boolean {
+        return this._root == undefined;
     }
 
     /**
@@ -58,8 +53,8 @@ export default class LinkedList<T> implements ICollection<T> {
             throw new Error("Index out of range.");
         }
 
-        var previousNode: ILinkedListNode<T> | undefined = undefined
-        var removedNode: ILinkedListNode<T> | undefined = this._root;
+        var previousNode: LinkedListNode<T> | undefined = undefined
+        var removedNode: LinkedListNode<T> | undefined = this._root;
         while (index-- > 0) {
             previousNode = removedNode;
             removedNode = removedNode?.next;
@@ -121,6 +116,33 @@ export default class LinkedList<T> implements ICollection<T> {
         }
         return arr;
     }
+}
 
+/**
+ * A node in the a singly-linked list
+ */
+class LinkedListNode<T> {
+    private _value : T;
+    private _next ?: LinkedListNode<T>;
 
+    constructor(value: T) {
+        this._value = value;
+        this._next = undefined;
+    }
+
+    get next(): LinkedListNode<T> | undefined {
+        return this._next;
+    }
+
+    set next(node: LinkedListNode<T> | undefined) {
+        this._next = node;
+    }
+
+    get value(): T {
+        return this._value;
+    }
+
+    set value(modifiedValue: T) {
+        this._value = modifiedValue;
+    }
 }

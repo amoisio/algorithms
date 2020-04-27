@@ -1,10 +1,10 @@
-import LinkedList from '../linkedList/linkedList';
+import LinkedList from './linkedList';
 
 describe('Linked list initialisation', () => {
-    test('Linked list initialises by default with capacity 0', () => {
+    test('Linked list initialises by default with size 0', () => {
         let list = new LinkedList<number>();
 
-        expect(list.capacity).toBe(0);
+        expect(list.size).toBe(0);
     });
 });
 
