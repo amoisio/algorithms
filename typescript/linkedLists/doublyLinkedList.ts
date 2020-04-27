@@ -6,7 +6,7 @@ import ICollection from "../collection/iCollection";
  * - Removing an item worst case is O(N)
  * 
  */
-export default class LinkedList<T> implements ICollection<T> {
+export default class DoublyLinkedList<T> implements ICollection<T> {
     private _size: number;
     private _root?: LinkedListNode<T>;
     private _last?: LinkedListNode<T>;
@@ -43,6 +43,7 @@ export default class LinkedList<T> implements ICollection<T> {
             this._root = newNode;
         } else {
             this._last!.next = newNode;
+            newNode.prev = this._last;
         }
 
         this._last = newNode;
@@ -55,41 +56,35 @@ export default class LinkedList<T> implements ICollection<T> {
      * @returns Item that was removed
      */
     public remove(index: number): T {
-        if (index < 0 || index >= this.size || this._root === undefined) {
+        if (index < 0 || index >= this.size || this._root === undefined || this._last === undefined) {
             throw new Error("Index out of range.");
         }
+        let removed: LinkedListNode<T>;
 
-        var previousNode: LinkedListNode<T> | undefined = undefined
-        var removedNode: LinkedListNode<T> | undefined = this._root;
-        while (index-- > 0) {
-            previousNode = removedNode;
-            removedNode = removedNode?.next;
-        }
-
-        if (removedNode === undefined) {
-            throw new Error("Removed node was undefined. This should not happen.");
-        }
-
-        if (previousNode === undefined) {
-            // Removing first item
-            if (this._last === removedNode) {
-                this._last = undefined;
-                this._root = undefined;
-            } else {
-                this._root = removedNode.next;
-            }
-        } else if (removedNode.next === undefined) {
-            // Removing last item
-            this._last = previousNode;
-            previousNode.next = undefined;
+        if (index == 0) {
+            removed = this._root;
+            this._root = removed.next;
+        } else if(index == this._size - 1) {
+            removed = this._last;
+            this._last = removed.prev;
         } else {
-            // Other cases
-            previousNode.next = removedNode.next;
+            removed = this._root;
+            while (index-- > 0) {
+                removed = removed.next!;
+            }
+            removed.prev!.next = removed.next;
+            removed.next!.prev = removed.prev;
         }
 
-        removedNode.next = undefined;
+        removed.next = undefined;
+        removed.prev = undefined;
         this._size--;
-        return removedNode?.value;
+        if (this.isEmpty()) {
+            this._last = undefined;
+            this._root = undefined;
+        }
+
+        return removed.value;
     }
 
     public getItem(index: number): T {
@@ -128,10 +123,12 @@ export default class LinkedList<T> implements ICollection<T> {
 class LinkedListNode<T> {
     private _value : T;
     private _next ?: LinkedListNode<T>;
+    private _prev ?: LinkedListNode<T>;
 
     constructor(value: T) {
         this._value = value;
         this._next = undefined;
+        this._prev = undefined;
     }
 
     get next(): LinkedListNode<T> | undefined {
@@ -140,6 +137,14 @@ class LinkedListNode<T> {
 
     set next(node: LinkedListNode<T> | undefined) {
         this._next = node;
+    }
+
+    get prev(): LinkedListNode<T> | undefined {
+        return this._prev;
+    }
+
+    set prev(node: LinkedListNode<T> | undefined) {
+        this._prev = node;
     }
 
     get value(): T {
