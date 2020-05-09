@@ -35,4 +35,6 @@ export default interface ICollection<T> {
      * Get collection items as an array.
      */
     toArray(): T[];
+
+    [Symbol.iterator]():  Iterator<T>;
 }

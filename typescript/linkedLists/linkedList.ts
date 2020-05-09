@@ -16,6 +16,22 @@ export default class LinkedList<T> implements ICollection<T> {
         this._root = undefined;
         this._last = undefined;
     }
+    [n: number]: T;
+
+    [Symbol.iterator](): Iterator<T> {
+        let node: LinkedListNode<T> | undefined;
+        return {
+            next: () => {
+                node = (node === undefined)
+                    ? this._root
+                    : node.next;
+
+                return (node === undefined)
+                    ? { done: true , value: undefined }
+                    : { done: false, value: node?.value }; 
+            }
+        };
+    }
 
     /**
      * Number of nodes in the list
@@ -126,8 +142,8 @@ export default class LinkedList<T> implements ICollection<T> {
  * A node in the a singly-linked list
  */
 class LinkedListNode<T> {
-    private _value : T;
-    private _next ?: LinkedListNode<T>;
+    private _value: T;
+    private _next?: LinkedListNode<T>;
 
     constructor(value: T) {
         this._value = value;
