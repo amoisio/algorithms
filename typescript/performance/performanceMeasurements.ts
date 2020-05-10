@@ -20,7 +20,7 @@ export default class PerformanceMeasurements {
         this._data[this._index++] = measurement;
     }
 
-    public getStatistics(title: string, filter: (value: number, index: number, array: number[]) => unknown | undefined): PerformanceStatistics {
+    public getStatistics(title: string, filter ?: (value: number, index: number, array: number[]) => unknown | undefined): PerformanceStatistics {
         let stats = new Statistics();
         let data = this.getStatisticsData();
         stats.compute(data);

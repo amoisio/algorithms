@@ -1,5 +1,5 @@
 export default class Statistics {
-
+    private _data ?: number[];
     private _min ?: number;
     private _max ?: number;
     private _count ?: number;
@@ -9,7 +9,14 @@ export default class Statistics {
     private _stddev ?: number;
     private _confidenceLo ?: number;
     private _confidenceHi ?: number;
-
+    
+    get data(): number[] {
+        if (typeof this._data == "undefined") {
+            return [];
+        } else {
+            return this._data;   
+        }
+    }
     get min(): number {
         if (typeof this._min == "undefined") {
             throw new Error("Statistics not yet computed. Run compute first.");
@@ -86,9 +93,12 @@ export default class Statistics {
      * Compute statistics
      */
     public compute(data: number[]) {
-        if (data === undefined || data === null || data.length == 0)
+        if (data === undefined || data === null || data.length == 0) {
             throw new Error("Insufficient data");
+        }
 
+        this._data = data;
+        
         let sortedData = data.sort((a, b) => a - b);            
 
         this._count = data.length;

@@ -1,9 +1,10 @@
 import ThreeSum from './threeSum';
 import { performance } from 'perf_hooks';
+import DoublingMeasurer from '../performance/doublingMeasurer';
 
-console.log("ThreeSum program: ");
+console.log("ThreeSum program:");
 
-let ns = [1000, 2000, 3000, 4000, 5000];
+let ns = [250, 500, 1000, 2000, 4000];
 
 for (let i = 0; i < ns.length; i++) {
     let n = ns[i];
@@ -11,7 +12,7 @@ for (let i = 0; i < ns.length; i++) {
 
     // console.log("Generating numbers N: " + n);
     while (numbers.length < n) {
-        let candidate = Math.round((Math.random() * 2 - 1) * 10000);
+        let candidate = Math.round((Math.random() * 2 - 1) * 1000000);
         if (!numbers.includes(candidate)) {
             numbers.push(candidate);
         }
@@ -22,10 +23,29 @@ for (let i = 0; i < ns.length; i++) {
     let t1 = performance.now();
     let duration = Math.round((t1 - t0));
 
-    console.log(n + ": " + result + " in " + duration + " ms");
+    console.log(`${n}: ${duration}`);
 }
 
-//  196
-// 1387
-// 8596
-// 65281
+console.log(`ThreeSumwith Doubling Measurer:`);
+let items: number[] = [];
+let measurer = new DoublingMeasurer("ThreeSum", 5, 250);
+measurer.reset = resetFn;
+measurer.execute = executeFn;
+measurer.report = (count: number, duration: number) => {
+    console.log(`${count}: ${duration}`);
+}
+measurer.getStatistics();
+
+function resetFn(count: number) {
+    items = [];
+    while (items.length < count) {
+        let candidate = Math.round((Math.random() * 2 - 1) * 1000000);
+        if (!items.includes(candidate)) {
+            items.push(candidate);
+        }
+    }
+}
+
+function executeFn(count: number) {
+    ThreeSum(items);
+}
