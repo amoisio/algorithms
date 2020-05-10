@@ -7,6 +7,7 @@ import ICollection from "../collection/iCollection";
  * 
  */
 export default class DoublyLinkedList<T> implements ICollection<T> {
+    
     private _size: number;
     private _root?: LinkedListNode<T>;
     private _last?: LinkedListNode<T>;
@@ -102,6 +103,21 @@ export default class DoublyLinkedList<T> implements ICollection<T> {
             throw new Error("Node value was undefined.");
         }
         return node?.value;
+    }
+
+    [Symbol.iterator](): Iterator<T> {
+        let node: LinkedListNode<T> | undefined;
+        return {
+            next: () => {
+                node = (node === undefined)
+                    ? this._root
+                    : node.next;
+
+                return (node === undefined)
+                    ? { done: true , value: undefined }
+                    : { done: false, value: node?.value }; 
+            }
+        };
     }
 
     public toArray(): T[] {

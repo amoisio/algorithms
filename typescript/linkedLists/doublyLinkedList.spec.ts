@@ -136,4 +136,17 @@ describe('Doubly linked list item access', () => {
         expect(list.getItem(1)).toBe(2);
         expect(list.getItem(2)).toBe(3);
     });
+
+    test('Items can be iterated with for..of', () => {
+        let list = new DoublyLinkedList<number>();
+        list.add(5);
+        list.add(2);
+        list.add(3);
+
+
+        for(let item of list) {
+            expect([5, 2, 3]).toContain(item);
+        }
+        
+    });
 });

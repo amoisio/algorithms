@@ -16,7 +16,6 @@ export default class LinkedList<T> implements ICollection<T> {
         this._root = undefined;
         this._last = undefined;
     }
-    [n: number]: T;
 
     [Symbol.iterator](): Iterator<T> {
         let node: LinkedListNode<T> | undefined;
