@@ -32,3 +32,19 @@ function findMinMax(data: number[]): [number, number] {
 
     return [min, max];
 }
+
+export function linearizeQuadratic(data: number[]): number[] {
+    return data.map(d => Math.sqrt(d));
+}
+
+export function linearizeCubic(data: number[]): number[] {
+    return data.map(d => Math.cbrt(d));
+}
+
+export function linearizeExponential(data: number[]): number[] {
+    return data.map(d => Math.log(d));
+}
+
+export function linearizeLogarithmic(data: number[]): number[] {
+    return data.map(d => Math.exp(d));
+}

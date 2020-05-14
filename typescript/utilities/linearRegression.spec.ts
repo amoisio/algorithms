@@ -3,12 +3,8 @@ import LinearRegression from './linearRegression';
 describe("Linear regression", () => {
 
     test("Simple linear regression", () => {
-        let data: [number, number][] = [ [0, 1]
-        , [1, 2]
-        , [2, 3]
-        , [3, 4]
-        , [4, 5]];
-
+        let data: number[][] = [ [0, 1, 2, 3, 4], [1, 2, 3, 4, 5] ];
+        
         let regression = new LinearRegression(data);
         regression.normalize = true;
         regression.computeModel();
