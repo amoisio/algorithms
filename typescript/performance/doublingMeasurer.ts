@@ -52,7 +52,7 @@ export default class DoublingMeasurer implements iPerformanceMeasurer {
             let executionTime = Math.round((t1 - t0));
             
             this.report?.(items, executionTime);
-            this._measurements.add(executionTime);
+            this._measurements.add(items, executionTime);
         }
 
         return this._measurements.getStatistics(this._name);

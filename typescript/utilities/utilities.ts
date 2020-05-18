@@ -4,7 +4,13 @@
  */
 export function normalize(data: number[]): number[] {
     let [min, max] = findMinMax(data);
-    return data.map(d => (d - min)/(max - min));
+    if (min == max) {
+        return max == 0
+            ? data.map(d => 0)
+            : data.map(d => 1);
+    } else {
+        return data.map(d => (d - min) / (max - min));
+    }
 }
 
 /**

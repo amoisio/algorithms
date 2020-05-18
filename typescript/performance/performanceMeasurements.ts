@@ -4,20 +4,25 @@ import Statistics from '../utilities/statistics';
  * Encapsulates performance measurements and metrics
  */
 export default class PerformanceMeasurements {
-    private _data: number[];
+    private readonly _costs: number[];
+    private readonly _loads: number[];
     private _index: number;
 
     constructor(n: number) {
-        this._data = new Array<number>(n);
+        this._costs = new Array<number>(n);
+        this._loads = new Array<number>(n);
+
         this._index = 0;
     }
 
     private getStatisticsData(): number[] {
-        return this._data.slice(0, this._index);
+        return this._loads.slice(0, this._index);
     }
 
-    public add(measurement: number) {
-        this._data[this._index++] = measurement;
+    public add(load: number, cost: number) {
+        this._costs[this._index] = cost;
+        this._loads[this._index] = load;
+        this._index++;
     }
 
     public getStatistics(title: string, filter ?: (value: number, index: number, array: number[]) => unknown | undefined): PerformanceStatistics {

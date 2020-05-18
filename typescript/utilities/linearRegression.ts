@@ -1,5 +1,3 @@
-import { normalize } from './utilities';
-
 /**
  * Computes a linear model f(x) = ax + b for the given data.
  */
@@ -9,11 +7,6 @@ export default class LinearRegression {
     constructor(data: number[][]) {
         this._data = data;
     }
-
-    /**
-     * Determines if data should be normalized before running linear regression.
-     */
-    public normalize: boolean = false;
 
     /**
      * Model coefficient a.
@@ -49,10 +42,6 @@ export default class LinearRegression {
      * Computes the model parameters.
      */
     public computeModel(): void {
-        if(this.normalize) {
-            this.normalizeData();
-        }   
-
         let n = this._data[0].length;
 
         let sx = this._data[0].reduce((prev, current) => prev + current, 0);
@@ -68,15 +57,5 @@ export default class LinearRegression {
 
         this.b = (sxx * sy - sx*sxy) / (n*sxx - sx * sx);
         this.a = (sy - n*this.b) / sx;   
-    }
-
-    /**
-     * Normalizes the data set so that all data points are within the unit square.
-     */
-    private normalizeData(): void {
-        let len = this._data.length;
-        for(let i = 0; i < len; i++) {
-            this._data[i] = normalize(this._data[i]);
-        }
     }
 }

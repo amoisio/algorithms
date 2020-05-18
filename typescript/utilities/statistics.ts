@@ -1,13 +1,3 @@
-export enum GrowthModel {
-    Undetermined = 0,
-    Contant = 1,
-    Linear = 2,
-    Quadratic = 3,
-    Cubic = 4,
-    Logarithmic = 5,
-    Linearithmic = 6
-}
-
 export default class Statistics {
     private _data ?: number[];
     private _min ?: number;
@@ -19,7 +9,6 @@ export default class Statistics {
     private _stddev ?: number;
     private _confidenceLo ?: number;
     private _confidenceHi ?: number;
-    private _growthModel ?: GrowthModel;
 
     get data(): number[] {
         if (typeof this._data == "undefined") {
@@ -97,14 +86,6 @@ export default class Statistics {
             throw new Error("Statistics not yet computed. Run compute first.");
         } else {
             return this._confidenceHi;
-        }
-    }
-
-    get growthModel(): GrowthModel {
-        if (typeof this._growthModel == "undefined") {
-            throw new Error("Statistics not yet computed. Run compute first.");
-        } else {
-            return this._growthModel;
         }
     }
 

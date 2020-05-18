@@ -22,7 +22,7 @@ export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasu
 
         let t1 = performance.now();
         let duration = Math.round((t1 - t0)*1000); // us
-        this._measurements.add(duration);
+        this._measurements.add(1, duration);
     }
 
     connected(p: number, q: number): boolean {
@@ -32,7 +32,7 @@ export default class PerformanceWrapper implements iUnionFind, iPerformanceMeasu
 
         let t1 = performance.now();
         let duration = Math.round((t1 - t0)*1000); // us
-        this._measurements.add(duration);
+        this._measurements.add(1, duration);
 
         return result;
     }
