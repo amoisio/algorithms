@@ -1,10 +1,10 @@
 import LinkedList from './linkedList';
-
+import { toArray } from '../collection/collectionUtilities';
 describe('Linked list initialisation', () => {
     test('Linked list initialises by default with size 0', () => {
         let list = new LinkedList<number>();
 
-        expect(list.size).toBe(0);
+        expect(list.size()).toBe(0);
     });
 
     test('Linked list with no entries is empty', () => {
@@ -27,7 +27,7 @@ describe('Linked list item addition', () => {
 
         list.add(16);
 
-        expect(list.toArray()).toContain(16);
+        expect(toArray(list)).toContain(16);
     });
 
     test('Adding null or undefined item throws an error', () => {
@@ -45,9 +45,9 @@ describe('Linked list item addition', () => {
         list.add(5);
         list.add(2);
 
-        let size = list.size;
+        let size = list.size();
         list.add(3);
-        expect(list.size).toBe(size + 1);
+        expect(list.size()).toBe(size + 1);
     });
 });
 
@@ -57,24 +57,10 @@ describe('Linked list item removal', () => {
         let list = new LinkedList<number>();
         list.add(1);
 
-        var removed = list.remove(0);
+        var removed = list.remove();
 
         expect(removed).toBe(1);
-        expect(list.size).toBe(0);
-        expect(list.toArray().length).toBe(0);
-    });
-
-    test('The first item can be removed', () => {
-        let list = new LinkedList<number>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        var removed = list.remove(0);
-
-        expect(removed).toBe(1);
-        expect(list.size).toBe(2);
-        expect(list.toArray()).toEqual([2, 3]);
+        expect(list.size()).toBe(0);
     });
 
     test('The last item can be removed', () => {
@@ -83,11 +69,10 @@ describe('Linked list item removal', () => {
         list.add(2);
         list.add(3);
 
-        var removed = list.remove(2);
+        var removed = list.remove();
 
-        expect(removed).toBe(3);
-        expect(list.size).toBe(2);
-        expect(list.toArray()).toEqual([1, 2]);
+        expect(removed).toBe(1);
+        expect(list.size()).toBe(2);
     });
 
 
@@ -97,18 +82,10 @@ describe('Linked list item removal', () => {
         list.add(2);
         list.add(3);
 
-        let removed = list.remove(1 );
+        let removed = list.remove();
 
-        expect(list.toArray()).toEqual([1, 3]);
-        expect(removed).toBe(2);
-    });
-
-    test('Removing with out of bound index throws an error', () => {
-        let list = new LinkedList<number>();
-        list.add(1);
-        list.add(2);
-
-        expect(() => list.remove(12)).toThrow();
+        expect(toArray(list)).toEqual([2, 3]);
+        expect(removed).toBe(1);
     });
 
     test('Removing an item decreases the size of the list', () => {
@@ -117,10 +94,10 @@ describe('Linked list item removal', () => {
         list.add(2);
         list.add(3);
 
-        let size = list.size;
-        list.remove(2);
+        let size = list.size();
+        list.remove();
 
-        expect(list.size).toBe(size - 1);
+        expect(list.size()).toBe(size - 1);
     });
 });
 
@@ -131,10 +108,9 @@ describe('Linked list item access', () => {
         list.add(2);
         list.add(3);
 
-        var arr = list.toArray();
-        expect(list.getItem(0)).toBe(5);
-        expect(list.getItem(1)).toBe(2);
-        expect(list.getItem(2)).toBe(3);
+        expect(toArray(list)[0]).toBe(5);
+        expect(toArray(list)[1]).toBe(2);
+        expect(toArray(list)[2]).toBe(3);
     });
 
     test('Linked list can be iterated with for..of', () => {

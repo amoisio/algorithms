@@ -6,7 +6,7 @@ export default interface ICollection<T> {
     /**
      * Get the number of items in the list.
      */
-    size: number;
+    size(): number;
 
     /**
      * Determine if the collection is empty.
@@ -20,24 +20,13 @@ export default interface ICollection<T> {
     add(item: T): void;
 
     /**
-     * Remove (and return) the item at the specific index.
-     * @param index Item index to remove.
+     * Removes and return an item from the collection
      * @returns Item that was removed.
      */
-    remove(index: number): T;
-
-    /**
-     * Get the item at the specific index.
-     */
-    getItem(index: number): T;
-
-    /**
-     * Get collection items as an array.
-     */
-    toArray(): T[];
+    remove(): T;
 
     /**
      * Defines an iterator for the collection
      */
-    [Symbol.iterator]():  Iterator<T>;
+    [Symbol.iterator](): Iterator<T>;
 }
