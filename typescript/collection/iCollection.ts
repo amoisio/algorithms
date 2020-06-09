@@ -14,18 +14,6 @@ export default interface ICollection<T> {
     isEmpty(): boolean;
 
     /**
-     * Add an item to the collection.
-     * @param item Item to add.
-     */
-    add(item: T): void;
-
-    /**
-     * Removes and return an item from the collection
-     * @returns Item that was removed.
-     */
-    remove(): T;
-
-    /**
      * Defines an iterator for the collection
      */
     [Symbol.iterator](): Iterator<T>;

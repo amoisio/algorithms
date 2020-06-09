@@ -20,18 +20,21 @@ export default class LinkedList<T> implements ICollection<T> {
     }
 
     /**
-     * Number of nodes in the list
+     * Number of items in the list
      */
     public size(): number {
         return this._size;
     }
 
+    /**
+     * Determines if the linked list is empty.
+     */
     public isEmpty(): boolean {
         return this._root == undefined;
     }
 
     /**
-     * Adds an item to the back of thelist.
+     * Adds an item to the back of the list.
      * @param item Item to add
      */
     public add(item: T): void {

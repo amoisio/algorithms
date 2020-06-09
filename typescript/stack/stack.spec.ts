@@ -1,11 +1,9 @@
-import LinkedList from '../linkedLists/linkedList';
-import ICollection from '../collection/iCollection';
 import Stack from './stack';
+import { toArray } from '../collection/collectionUtilities';
 
 describe('Stack operation', () => {
     test('Items can be pushed onto the stack', () => {
-        let list: ICollection<number> = new LinkedList<number>();
-        let stack = new Stack<number>(list);
+        let stack = new Stack<number>();
 
         stack.push(1);
         stack.push(1);
@@ -13,12 +11,11 @@ describe('Stack operation', () => {
         stack.push(3);
         stack.push(5);
         
-        expect(stack.toArray()).toEqual([1,1,2,3,5]);
+        expect(toArray(stack)).toEqual([5, 3, 2, 1, 1]);
     });
 
     test('Items can be popped from the stack', () => {
-        let list: ICollection<number> = new LinkedList<number>();
-        let stack = new Stack<number>(list);
+        let stack = new Stack<number>();
 
         stack.push(1);
         stack.push(1);
@@ -28,6 +25,6 @@ describe('Stack operation', () => {
         let item = stack.pop();
 
         expect(item).toBe(5);
-        expect(stack.toArray()).toEqual([1,1,2,3]);
+        expect(toArray(stack)).toEqual([3, 2, 1, 1]);
     });
 });

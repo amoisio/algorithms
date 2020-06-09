@@ -1,22 +1,31 @@
 import IQueue from "./iQueue";
-import ICollection from "collection/iCollection";
+import DoublyLinkedList from "../linkedLists/doublyLinkedList";
 
 export default class Queue<T> implements IQueue<T> {
-    private readonly _data: ICollection<T>;
+    
+    private readonly _storage: DoublyLinkedList<T>;
 
-    constructor(data: ICollection<T>) {
-        this._data = data;
-    }
-    toArray(): T[] {
-        return this._data.toArray();
+    constructor() {
+        this._storage = new DoublyLinkedList<T>();
     }
 
     queue(item: T): void {
-        this._data.add(item);
+        this._storage.addFirst(item);
     }
     
     dequeue(): T {
-        return this._data.remove(0);
+        return this._storage.removeLast();
     }
     
+    size(): number {
+        return this._storage.size();
+    }
+
+    isEmpty(): boolean {
+        return this._storage.isEmpty();
+    }
+
+    [Symbol.iterator](): Iterator<T> {
+        return this._storage[Symbol.iterator]();
+    }
 }

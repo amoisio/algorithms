@@ -102,15 +102,13 @@ describe('Linked list item removal', () => {
 });
 
 describe('Linked list item access', () => {
-    test('Items can be accessed with a 0-based index', () => {
+    test('List can be converted to an array with ToArray', () => {
         let list = new LinkedList<number>();
         list.add(5);
         list.add(2);
         list.add(3);
 
-        expect(toArray(list)[0]).toBe(5);
-        expect(toArray(list)[1]).toBe(2);
-        expect(toArray(list)[2]).toBe(3);
+        expect(toArray(list)).toStrictEqual([5, 2, 3]);
     });
 
     test('Linked list can be iterated with for..of', () => {
@@ -119,10 +117,8 @@ describe('Linked list item access', () => {
         list.add(2);
         list.add(3);
 
-
         for(let item of list) {
-            expect([5, 2, 3]).toContain(item);
+            expect(toArray(list)).toContain(item);
         }
-        
     });
 });

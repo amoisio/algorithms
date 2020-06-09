@@ -1,10 +1,11 @@
 import DoublyLinkedList from './doublyLinkedList';
+import { toArray } from '../collection/collectionUtilities';
 
 describe('Doubly linked list initialisation', () => {
     test('Doubly linked list initialises by default with size 0', () => {
         let list = new DoublyLinkedList<number>();
 
-        expect(list.size).toBe(0);
+        expect(list.size()).toBe(0);
     });
 
     test('Doubly linked list with no entries is empty', () => {
@@ -15,138 +16,115 @@ describe('Doubly linked list initialisation', () => {
 
     test('Doubly linked list with at least one entry is not empty', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(1);
+        list.addFirst(1);
 
         expect(list.isEmpty()).toBeFalsy();
     })
 });
 
 describe('Doubly linked list item addition', () => {
-    test('Items can be added to the list', () => {
+    test('Items can be added to the front of the list', () => {
         let list = new DoublyLinkedList<number>();
+        list.addFirst(15);
+        list.addFirst(16);
 
-        list.add(16);
+        expect(toArray(list)).toStrictEqual([16, 15]);
+    });
 
-        expect(list.toArray()).toContain(16);
+    test('Items can be added to the back of the list', () => {
+        let list = new DoublyLinkedList<number>();
+        list.addLast(10);
+        list.addLast(9);
+
+        expect(toArray(list)).toStrictEqual([10, 9]);
     });
 
     test('Adding null or undefined item throws an error', () => {
         let list = new DoublyLinkedList<number>();
 
-        expect(() => list.add(null))
+        expect(() => list.addFirst(null))
             .toThrow();
 
-        expect(() => list.add(undefined))
+        expect(() => list.addFirst(undefined))
+            .toThrow();
+
+        expect(() => list.addLast(null))
+            .toThrow();
+
+        expect(() => list.addLast(undefined))
             .toThrow();
     });
 
     test('Adding an item increases the size of the list', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(5);
-        list.add(2);
+        list.addFirst(5);
+        list.addFirst(2);
 
-        let size = list.size;
-        list.add(3);
-        expect(list.size).toBe(size + 1);
+        let size = list.size();
+        list.addFirst(3);
+        expect(list.size()).toBe(size + 1);
     });
 });
 
 
 describe('Doubly linked list item removal', () => {
-    test('When the only item is removed, size is 0 and array is empty', () => {
+    test('Items can be removed from the front of the list', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(1);
+        list.addFirst(1);
+        list.addFirst(2);
+        list.addFirst(3);
 
-        var removed = list.remove(0);
-
-        expect(removed).toBe(1);
-        expect(list.size).toBe(0);
-        expect(list.toArray().length).toBe(0);
-    });
-
-    test('The first item can be removed', () => {
-        let list = new DoublyLinkedList<number>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        var removed = list.remove(0);
-
-        expect(removed).toBe(1);
-        expect(list.size).toBe(2);
-        expect(list.toArray()).toEqual([2, 3]);
-    });
-
-    test('The last item can be removed', () => {
-        let list = new DoublyLinkedList<number>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        var removed = list.remove(2);
+        var removed = list.removeFirst();
 
         expect(removed).toBe(3);
-        expect(list.size).toBe(2);
-        expect(list.toArray()).toEqual([1, 2]);
+        expect(list.size()).toBe(2);
+        expect(toArray(list)).toEqual([2, 1]);
     });
 
-
-    test('Items can be removed from the list', () => {
+    test('Items can be removed from the back of the list', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
+        list.addFirst(1);
+        list.addFirst(2);
+        list.addFirst(3);
 
-        let removed = list.remove(1 );
+        var removed = list.removeLast();
 
-        expect(list.toArray()).toEqual([1, 3]);
-        expect(removed).toBe(2);
+        expect(removed).toBe(1);
+        expect(list.size()).toBe(2);
+        expect(toArray(list)).toEqual([3, 2]);
     });
 
-    test('Removing with out of bound index throws an error', () => {
+    test('When the only item is removed, size is 0 and array is empty', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(1);
-        list.add(2);
+        list.addFirst(1);
 
-        expect(() => list.remove(12)).toThrow();
+        var removed = list.removeFirst();
+
+        expect(removed).toBe(1);
+        expect(list.size()).toBe(0);
     });
 
     test('Removing an item decreases the size of the list', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(5);
-        list.add(2);
-        list.add(3);
+        list.addFirst(5);
+        list.addLast(2);
+        list.addFirst(3);
 
-        let size = list.size;
-        list.remove(2);
+        let size = list.size();
+        list.removeLast();
 
-        expect(list.size).toBe(size - 1);
+        expect(list.size()).toBe(size - 1);
     });
 });
 
 describe('Doubly linked list item access', () => {
-    test('Items can be accessed with a 0-based index', () => {
-        let list = new DoublyLinkedList<number>();
-        list.add(5);
-        list.add(2);
-        list.add(3);
-
-        var arr = list.toArray();
-        expect(list.getItem(0)).toBe(5);
-        expect(list.getItem(1)).toBe(2);
-        expect(list.getItem(2)).toBe(3);
-    });
-
+    
     test('Items can be iterated with for..of', () => {
         let list = new DoublyLinkedList<number>();
-        list.add(5);
-        list.add(2);
-        list.add(3);
+        list.addFirst(5);
+        list.addFirst(2);
+        list.addFirst(3);
 
-
-        for(let item of list) {
-            expect([5, 2, 3]).toContain(item);
-        }
-        
+        expect(toArray(list)).toStrictEqual([3, 2, 5]);
     });
 });

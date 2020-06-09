@@ -1,23 +1,31 @@
 import IStack from "./iStack";
-import ICollection from "collection/iCollection";
+import DoublyLinkedList from "../linkedLists/doublyLinkedList";
+import IDeque from "../collection/iDeque";
 
 export default class Stack<T> implements IStack<T> {
-    private readonly _data: ICollection<T>;
+    private readonly _storage: IDeque<T>;
 
-    constructor(data: ICollection<T>) {
-        this._data = data;
+    constructor() {
+        this._storage = new DoublyLinkedList<T>();
     }
 
-    toArray(): T[] {
-        return this._data.toArray();
+    size(): number {
+        return this._storage.size();
+    }
+
+    isEmpty(): boolean {
+        return this._storage.isEmpty();
     }
 
     push(item: T): void {
-        this._data.add(item);
+        this._storage.addFirst(item);
     }
     
     pop(): T {
-        return this._data.remove(this._data.size - 1);
+        return this._storage.removeFirst();
     }
-    
+
+    [Symbol.iterator](): Iterator<T> {
+        return this._storage[Symbol.iterator]();
+    }
 }
