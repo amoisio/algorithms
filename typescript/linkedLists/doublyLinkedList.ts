@@ -2,9 +2,9 @@ import IDeque from "collection/iDeque";
 
 /**
  * LINKED LIST
- * - New items are added to the end of the list O(1)
- * - Removing an item worst case is O(N)
- * 
+ * - Items can be added to the back or front of the list in O(1) time
+ * - Items can be removed from the back or front of the list in O(1) time
+ * - Memory: 12 + n*(8 + m) where n is the number of items in the list and m is the size of the individual item
  */
 export default class DoublyLinkedList<T> implements IDeque<T> {
     private _size: number;

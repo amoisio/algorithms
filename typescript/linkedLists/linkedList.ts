@@ -2,11 +2,9 @@ import ICollection from "../collection/iCollection";
 
 /**
  * LINKED LIST
- * Implementation 
- * - New items are added to the end of the list O(1)
- * - Removing an item worst case is O(N)
- * 
- */
+ * - Items are added to the back of the list in O(1) time
+ * - Items are removed from the front of the list in O(1) time
+  */
 export default class LinkedList<T> implements ICollection<T> {
     
     private _size: number;
