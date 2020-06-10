@@ -66,8 +66,17 @@ describe('Doubly linked list item addition', () => {
     });
 });
 
-
 describe('Doubly linked list item removal', () => {
+    test('Trying to remove items from an empty list throws an error', () => {
+        let list = new DoublyLinkedList<number>();
+
+        expect(() => list.removeFirst())
+            .toThrow();
+
+        expect(() => list.removeLast())
+            .toThrow();
+    });
+
     test('Items can be removed from the front of the list', () => {
         let list = new DoublyLinkedList<number>();
         list.addFirst(1);
