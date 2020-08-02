@@ -27,7 +27,7 @@ describe('Doubly linked list item addition', () => {
         let list = new DoublyLinkedList<number>();
         list.addFirst(15);
         list.addFirst(16);
-
+        
         expect(toArray(list)).toStrictEqual([16, 15]);
     });
 
@@ -40,7 +40,7 @@ describe('Doubly linked list item addition', () => {
     });
 
     test('Adding null or undefined item throws an error', () => {
-        let list = new DoublyLinkedList<number>();
+        let list = new DoublyLinkedList<number | null | undefined>();
 
         expect(() => list.addFirst(null))
             .toThrow();

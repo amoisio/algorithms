@@ -1,5 +1,4 @@
 import ICollection from "./iCollection";
-import IDeque from "collection/iDeque";
 
 /**
  * Returns the contents of ICollection as an array.

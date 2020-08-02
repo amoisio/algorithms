@@ -31,7 +31,7 @@ describe('Linked list item addition', () => {
     });
 
     test('Adding null or undefined item throws an error', () => {
-        let list = new LinkedList<number>();
+        let list = new LinkedList<number | null | undefined>();
 
         expect(() => list.add(null))
             .toThrow();
@@ -116,7 +116,8 @@ describe('Linked list item access', () => {
         list.add(5);
         list.add(2);
         list.add(3);
-
+        let s = toArray(list);
+        console.log(s);
         for(let item of list) {
             expect(toArray(list)).toContain(item);
         }

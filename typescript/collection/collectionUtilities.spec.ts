@@ -1,4 +1,4 @@
-import { toArray } from './collectionUtilities';
+import { toArray } from './collectionUtilities'
 import LinkedList from '../linkedLists/linkedList';
 
 describe('toArray', () => {
@@ -7,9 +7,7 @@ describe('toArray', () => {
         list.add(2);
         list.add(6);
         list.add(8);
-
         let array = toArray(list);
-
         expect(array).toStrictEqual([2, 6, 8]);
     });
 });    

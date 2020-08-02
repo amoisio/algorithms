@@ -27,9 +27,9 @@ removeMeasurer.reset = (count: number) => {
     }
 };
 removeMeasurer.execute = (count: number) => {
-    var size = list.size;
+    let size = list.size();
     for(let i = 0; i < size; i++) {
-        list.remove(list.size - 1);
+        list.remove();
     }
 };
 
