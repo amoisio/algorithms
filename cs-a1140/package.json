@@ -1,15 +1,21 @@
 {
   "name": "cs-a1140",
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
+    "verbose": true
+  },
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "generate": "tsc && node dist/data/generator.app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && jest"
   },
   "author": "Aleksi Moisio <aleksi.moisio30@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.6",
+    "jest": "^27.1.0",
     "tslint": "^6.1.3"
   }
 }

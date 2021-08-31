@@ -1,4 +1,4 @@
-export const numberGenerator = function (n: number, empty: number = 0.1): number[] {
+export const numberGenerator = function (n: number, empty: number = 0): number[] {
     let array = new Array<number>();
     let counter = 1;
     while(array.length < n)
