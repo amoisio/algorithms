@@ -1,7 +1,13 @@
-export const numberGenerator = function (n: number): number[] {
-    let array = new Array<number>(n);
-    for (let i = 0; i < n; i++) {
-        array[i] = i;
+export const numberGenerator = function (n: number, empty: number = 0.1): number[] {
+    let array = new Array<number>();
+    let counter = 1;
+    while(array.length < n)
+    {
+        if (Math.random() < empty) {
+            counter++;
+            continue;
+        }
+        array.push(counter++);
     }
 
     for (let i = 0; i < n; i++) {
@@ -10,5 +16,6 @@ export const numberGenerator = function (n: number): number[] {
         array[index] = array[i];
         array[i] = tmp;
     }
+
     return array;
 };

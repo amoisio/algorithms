@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "generate": "tsc && node dist/data/generator.app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aleksi Moisio <aleksi.moisio30@gmail.com>",
