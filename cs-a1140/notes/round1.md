@@ -26,3 +26,12 @@ O(n!) - factorial
 The worst-case running time of a program/algorithm is O(f(n)) if g(n) = O(f(n)), 
 where the function g(n) is obtained by taking, for each n, the longest running 
 time of any input of size n.
+
+## Arrays
+
+Use TypedArrays [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray] to access low-level 
+arrays.
+
+## Resizable arrays
+
+Arrays which can grow/compress dynamically.
