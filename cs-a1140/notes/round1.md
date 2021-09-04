@@ -35,3 +35,5 @@ arrays.
 ## Resizable arrays
 
 Arrays which can grow/compress dynamically.
+
+## Linked-list
