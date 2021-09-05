@@ -61,11 +61,11 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
             this.push(item);
         else {
             let newNode = new DoublyLinkedNode(item);
-            let node = this.getNode(index);
-            newNode.next = node;
-            newNode.prev = node!.prev;
-            node!.prev!.next = newNode;
-            node!.prev = newNode;
+            let previousNode = this.getNode(index - 1);
+            newNode.next = previousNode!.next;
+            newNode.prev = previousNode;
+            previousNode!.next!.prev = newNode;
+            previousNode!.next = newNode;
             this._size++;
         }
     }

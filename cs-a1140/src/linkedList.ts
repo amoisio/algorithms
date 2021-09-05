@@ -49,7 +49,6 @@ export interface ILinkedList<T> {
     get(index: number): T;
 }
 
-
 export class LinkedList<T> implements ILinkedList<T> {
     private _size: number;
     private _start: LinkedNode<T> | undefined;
@@ -91,10 +90,9 @@ export class LinkedList<T> implements ILinkedList<T> {
             this._start = undefined;
             this._end = undefined;
         } else {
-            let penultimateIndex = this._size - 2;
-            let penultimateNode = this.getNode(penultimateIndex);
-            penultimateNode!.next = undefined;
-            this._end = penultimateNode;
+            let newEnd = this.getNode(this._size - 2);
+            newEnd!.next = undefined;
+            this._end = newEnd;
         }
         this._size--;
         return value;
