@@ -12,11 +12,34 @@
                 "<node_internals>/**"
             ],
             "program": "${file}",
-            "preLaunchTask": "tsc: build - tsconfig.json",
+            "preLaunchTask": "tsc: build",
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}/dist/**/*.js"
             ],
             "console": "integratedTerminal"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest Tests",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/node_modules/.bin/jest",
+                "--runInBand",
+                "--no-cache"
+            ],
+            // "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            // "args": [
+            //     "-i",
+            //     "--no-cache"
+            // ],
+            "preLaunchTask": "tsc: build",
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true
         }
     ]
 }

@@ -1,59 +1,9 @@
-export interface ILinkedList<T> {
-    /**
-     * Number of items currently in the list.
-     */
-    size(): number;
+import { ILinkedList } from "./linkedList";
 
-    /**
-     * Adds a new item to the end of the list.
-     * @param item Item to add.
-     */
-    push(item: T): void;
-
-    /**
-     * Removes an item from the end of the list.
-     * @param item Item to remove.
-     */
-    pop(): T;
-
-    /**
-     * Inserts a new item at the specified index.
-     * @param index Index of the new item.
-     * @param item Item to insert.
-     */
-    insertAt(index: number, item: T): void;
-
-    /**
-     * Adds an item to the beginning of the list.
-     * @param item Item to add.
-     */
-    add(item: T): void;
-
-    /**
-     * Removes an item from the start of the list.
-     * @returns Item that was removed.
-     */
-    remove(): T;
-
-    /**
-     * Deletes an item from the given index of the list.
-     * @param index Index of the item to remove.
-     * @returns Item that was removed.
-     */
-    deleteFrom(index: number): T;
-
-    /**
-     * Get item from index.
-     * @param index Index to read.
-     */
-    get(index: number): T;
-}
-
-
-export class LinkedList<T> implements ILinkedList<T> {
+export class DoublyLinkedList<T> implements ILinkedList<T> {
     private _size: number;
-    private _start: LinkedNode<T> | undefined;
-    private _end: LinkedNode<T> | undefined;
+    private _start: DoublyLinkedNode<T> | undefined;
+    private _end: DoublyLinkedNode<T> | undefined;
 
     constructor() {
         this._size = 0;
@@ -69,18 +19,19 @@ export class LinkedList<T> implements ILinkedList<T> {
      * Push item at the end of the list in O(1).
      */
     public push(item: T) {
-        let newNode = new LinkedNode(item);
+        let newNode = new DoublyLinkedNode(item);
         if (this._start == undefined || this._end == undefined) {
             this._start = newNode;
         } else {
             this._end.next = newNode;
+            newNode.prev = this._end;
         }
         this._end = newNode;
         this._size++;
     }
 
     /**
-     * Pop item from the end of the list in O(N).
+     * Pop item from the end of the list in O(1).
      */
     public pop(): T {
         if (this._start == undefined || this._end == undefined)
@@ -91,10 +42,10 @@ export class LinkedList<T> implements ILinkedList<T> {
             this._start = undefined;
             this._end = undefined;
         } else {
-            let penultimateIndex = this._size - 2;
-            let penultimateNode = this.getNode(penultimateIndex);
-            penultimateNode!.next = undefined;
-            this._end = penultimateNode;
+            let newEnd = this._end.prev;
+            newEnd!.next = undefined;
+            this._end.prev = undefined;
+            this._end = newEnd;
         }
         this._size--;
         return value;
@@ -109,10 +60,12 @@ export class LinkedList<T> implements ILinkedList<T> {
         else if (index == this._size)
             this.push(item);
         else {
-            let newNode = new LinkedNode(item);
-            let previousNode = this.getNode(index - 1);
-            newNode.next = previousNode!.next;
-            previousNode!.next = newNode;
+            let newNode = new DoublyLinkedNode(item);
+            let node = this.getNode(index);
+            newNode.next = node;
+            newNode.prev = node!.prev;
+            node!.prev!.next = newNode;
+            node!.prev = newNode;
             this._size++;
         }
     }
@@ -121,11 +74,12 @@ export class LinkedList<T> implements ILinkedList<T> {
      * Add item to the start of the list in O(1).
      */
     public add(item: T): void {
-        let newNode = new LinkedNode(item);
-        if (this._start === undefined) {
+        let newNode = new DoublyLinkedNode(item);
+        if (this._start === undefined){
             this._end = newNode;
         } else {
             newNode.next = this._start;
+            this._start.prev = newNode;
         }
         this._start = newNode;
         this._size++;
@@ -143,6 +97,7 @@ export class LinkedList<T> implements ILinkedList<T> {
 
         let item = this._start;
         this._start = this._start.next;
+        this._start!.prev = undefined;
         item.next = undefined;
         this._size--;
         return item.value;
@@ -158,12 +113,13 @@ export class LinkedList<T> implements ILinkedList<T> {
         if (index == this._size - 1)
             return this.pop();
 
-        let previousNode = this.getNode(index - 1);
-        let value = previousNode!.next!.value;
-        previousNode!.next!.next = undefined;
-        previousNode!.next = previousNode!.next!.next;
+        let node = this.getNode(index);
+        node!.prev!.next = node!.next;
+        node!.next!.prev = node!.prev;
+        node!.next = undefined;
+        node!.prev = undefined;
         this._size--;    
-        return value;
+        return node!.value;
     }
 
     public get(index: number): T {
@@ -174,7 +130,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         return node!.value;
     }
 
-    private getNode(index: number): LinkedNode<T> | undefined {
+    private getNode(index: number): DoublyLinkedNode<T> | undefined {
         let temp = this._start;
         for (let i = 0; i < index; i++) {
             temp = temp?.next;
@@ -183,20 +139,22 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
 }
 
-class LinkedNode<T> {
-    private _next?: LinkedNode<T>;
+class DoublyLinkedNode<T> {
+    private _next?: DoublyLinkedNode<T>;
     private _value: T;
+    private _prev?: DoublyLinkedNode<T>;
 
     constructor(value: T) {
         this._next = undefined;
         this._value = value;
+        this._prev = undefined;
     }
 
-    get next(): LinkedNode<T> | undefined {
+    get next(): DoublyLinkedNode<T> | undefined {
         return this._next;
     }
 
-    set next(newNext: LinkedNode<T> | undefined) {
+    set next(newNext: DoublyLinkedNode<T> | undefined) {
         this._next = newNext;
     }
 
@@ -206,5 +164,13 @@ class LinkedNode<T> {
 
     set value(newValue: T) {
         this._value = newValue;
+    }
+
+    get prev(): DoublyLinkedNode<T> | undefined {
+        return this._prev;
+    }
+
+    set prev(newPrev: DoublyLinkedNode<T> | undefined) {
+        this._prev = newPrev;
     }
 }
