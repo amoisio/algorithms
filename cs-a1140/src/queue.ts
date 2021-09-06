@@ -3,6 +3,7 @@ import { LinkedList } from "./linkedList";
 export interface IQueue<T> {
     enqueue(item : T): void;
     dequeue(): T;
+    toArray(): T[];
 }
 
 export default class Queue<T> implements IQueue<T> {
@@ -15,5 +16,8 @@ export default class Queue<T> implements IQueue<T> {
     }
     dequeue(): T {
         return this._data.remove();
+    }
+    toArray(): T[] {
+        return this._data.toArray();
     }
 }

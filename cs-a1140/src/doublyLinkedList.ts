@@ -137,6 +137,14 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
         }
         return temp;
     }
+
+    public toArray(): T[] {
+        let array: T[] = [];
+        for (let i = 0; i < this._size; i++) {
+            array.push(this.get(i));
+        }
+        return array;
+    }
 }
 
 class DoublyLinkedNode<T> {

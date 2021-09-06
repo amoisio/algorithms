@@ -47,6 +47,11 @@ export interface ILinkedList<T> {
      * @param index Index to read.
      */
     get(index: number): T;
+
+    /**
+     * Return list data as an array.
+     */
+    toArray(): T[]
 }
 
 export class LinkedList<T> implements ILinkedList<T> {
@@ -178,6 +183,14 @@ export class LinkedList<T> implements ILinkedList<T> {
             temp = temp?.next;
         }
         return temp;
+    }
+
+    public toArray(): T[] {
+        let array: T[] = [];
+        for (let i = 0; i < this._size; i++) {
+            array.push(this.get(i));
+        }
+        return array;
     }
 }
 
