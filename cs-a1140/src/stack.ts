@@ -1,4 +1,4 @@
-import { LinkedList } from "./linkedList";
+import ResizableArray from "./resizableArray";
 
 export interface IStack<T> {
     push(item: T): void;
@@ -7,18 +7,19 @@ export interface IStack<T> {
 }
 
 export default class Stack<T> implements IStack<T> {
-    private readonly _data: LinkedList<T>; 
+    private readonly _data: ResizableArray<T>; 
     constructor() {
-        this._data = new LinkedList();
+        this._data = new ResizableArray(16);
     }
 
     push(item: T): void {
-        this._data.add(item);
+        this._data.push(item);
     }
     top(): T {
-        return this._data.get(0);
+        let index = this._data.size - 1;
+        return this._data.get(index);
     }
     pop(): T {
-        return this._data.remove();
+        return this._data.pop();
     }
 }
