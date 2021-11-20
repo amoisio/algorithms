@@ -1,0 +1,24 @@
+With complexity.ts I worked on the idea that I might be able to determine the complexity of an algorithm by using the following process:
+1. Normalize the data set
+2. Run a transformations on the data
+3. Run linear regression on the transformed and normalized data set
+4. Pick the model with least error
+5. Deduce that the approximate complexity of the algorithm is the reverse of the transformation that was applied in step 2
+
+The following transformations were run on the data
+1. Square root - assumption: quadratic data
+2. Cubic root - assumption: cubic data
+3. Natural logarithm - assumption : exponential data
+4. exponential - assumption: logarithmic data
+
+It was found that this algorithm was not able to detect constant, logarithmic or exponential time complexities.
+With constant data the issue was that under each transformation constants remains constants. With lin. reg. this leads
+to a situation where each regression provides the best fit. With logarithmic data the assumption of linearity after normalization 
+and tranformation did not hold. Hence, even if the data was logarithmic, the algorithm was unable to determine this.
+With exponential data, the problem was numeric overflow. This could have been corrected but I chose not to. 
+
+I would still like to build an application that could run experiments on arbitrary algorithms with customized/randomized inputs
+and determine their approximate time complexities. However, doing it this way seems frustrating.
+
+With the next go around, do some research regarding fitting non-linear data and the Levenberg-Marquart algorithm or the Gauss-Newton algorithm.
+
