@@ -1,7 +1,13 @@
 {
-  "name": "typescript",
+  "name": "algorithms",
+  "displayName": "Coursera algorithms 1",
+  "description": "Coursera algorithms 1",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
   "directories": {
     "example": "examples",
     "test": "tests",
@@ -9,10 +15,13 @@
     "performance": "performance"
   },
   "scripts": {
-    "test:unit": "jest"
+    "test": "tsc && jest"
   },
-  "author": "Aleksi Moisio",
-  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://localhost:4873"
+  },
+  "author": "Aleksi Moisio <aleksi.moisio30@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.0",
