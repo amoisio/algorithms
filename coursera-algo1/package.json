@@ -2,18 +2,14 @@
   "name": "algorithms",
   "displayName": "Coursera algorithms 1",
   "description": "Coursera algorithms 1",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "main": "dist/index.js",
   "type": "module",
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
-  "directories": {
-    "example": "examples",
-    "test": "tests",
-    "utilities": "utilities",
-    "performance": "performance"
-  },
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "tsc && jest"
   },
